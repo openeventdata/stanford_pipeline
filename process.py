@@ -124,7 +124,7 @@ def main():
     now = datetime.datetime.utcnow()
     coll = make_conn()
     stories = query_today(coll, now)
-    parser.stanford_parse(coll, stories)
+    parser.stanford_parse(coll, stories, stanford_dir)
 
 
 if __name__ == '__main__':

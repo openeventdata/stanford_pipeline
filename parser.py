@@ -5,12 +5,12 @@ import corenlp
 import logging
 
 
-def stanford_parse(coll, stories):
+def stanford_parse(coll, stories, stanford):
     logger = logging.getLogger('stanford')
 
     logger.info('Setting up CoreNLP.')
     print "\nSetting up StanfordNLP. The program isn't dead. Promise."
-    core = corenlp.StanfordCoreNLP('/Users/johnbeieler/stanford-corenlp',
+    core = corenlp.StanfordCoreNLP(stanford,
                                    properties='new.properties',
                                    memory='2g')
     total = stories.count()
