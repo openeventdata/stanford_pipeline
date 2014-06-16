@@ -21,22 +21,27 @@ def stanford_parse(coll, stories):
         print 'Processing story {}'.format(story['_id'])
         logger.info('\tProcessing story {}'.format(story['_id']))
 
-        content = _sentence_segmenter(story['content'])[:7]
+        if story['stanford'] == 1:
+            print '\tStory {} already parsed.'.format(story['_id'])
+            logger.info('\tStory {} already parsed.'.format(story['_id']))
+            pass
+        else:
+            content = _sentence_segmenter(story['content'])[:7]
 
-        parsed = []
-        for sent in content:
-            try:
-                stanford_result = core.raw_parse(sent)
-                parsed.append(stanford_result['sentences'][0]['parsetree'])
+            parsed = []
+            for sent in content:
+                try:
+                    stanford_result = core.raw_parse(sent)
+                    parsed.append(stanford_result['sentences'][0]['parsetree'])
 
-            except Exception as e:
-                print 'Error on story {}. ¯\_(ツ)_/¯. {}'.format(story['_id'],
-                                                                    e)
-                logger.warning('\tError on story {}. {}'.format(story['_id'],
-                                                                e))
+                except Exception as e:
+                    print 'Error on story {}. ¯\_(ツ)_/¯. {}'.format(story['_id'],
+                                                                        e)
+                    logger.warning('\tError on story {}. {}'.format(story['_id'],
+                                                                    e))
 
-        coll.update({"_id": story['_id']}, {"$set": {'parsed_sents': parsed,
-                                                     'stanford': 1}})
+            coll.update({"_id": story['_id']}, {"$set": {'parsed_sents': parsed,
+                                                         'stanford': 1}})
 
     print 'Done with StanfordNLP parse...\n\n'
     logger.info('Done with CoreNLP parse.')
