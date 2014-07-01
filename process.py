@@ -9,7 +9,7 @@ from pymongo import MongoClient
 from ConfigParser import ConfigParser
 
 
-def make_conn():
+def make_conn(db_auth, db_user, db_pass):
     """
     Function to establish a connection to a local MonoDB instance.
 
@@ -21,6 +21,8 @@ def make_conn():
 
     """
     client = MongoClient()
+    if db_auth:
+        client[db_auth].authenticate(db_user, db_pass)
     database = client.event_scrape
     collection = database['stories']
     return collection
@@ -100,13 +102,21 @@ def parse_config():
                 log_dir = cparser.get('Logging', 'log_file')
             else:
                 log_dir = ''
-            return stanford_dir, log_dir
+            if 'Auth' in parser.sections():
+                auth_db = parser.get('Auth', 'log_file')
+                auth_user = parser.get('Auth', 'auth_user')
+                auth_pass = parser.get('Auth', 'auth_pass')
+            else:
+                auth_db = ''
+                auth_user = ''
+                auth_pass = ''
+            return stanford_dir, log_dir, auth_db, auth_user, auth_pass
         except Exception, e:
             print 'There was an error parsing the config file. {}'.format(e)
 
 
 def main():
-    stanford_dir, log_dir = parse_config()
+    stanford_dir, log_dir, db_auth, db_user, db_pass = parse_config()
     #Setup the logging
     logger = logging.getLogger('stanford')
     logger.setLevel(logging.INFO)
@@ -122,7 +132,7 @@ def main():
     logger.info('Running.')
 
     now = datetime.datetime.utcnow()
-    coll = make_conn()
+    coll = make_conn(db_auth, db_user, db_pass)
     stories = query_today(coll, now)
     parser.stanford_parse(coll, stories, stanford_dir)
 
