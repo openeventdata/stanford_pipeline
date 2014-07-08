@@ -89,7 +89,15 @@ def parse_config():
                 log_dir = cparser.get('Logging', 'log_file')
             else:
                 log_dir = ''
-            return stanford_dir, log_dir
+            if 'Auth' in cparser.sections():
+                auth_db = cparser.get('Auth', 'auth_db')
+                auth_user = cparser.get('Auth', 'auth_user')
+                auth_pass = cparser.get('Auth', 'auth_pass')
+            else:
+                auth_db = ''
+                auth_user = ''
+                auth_pass = ''
+            return stanford_dir, log_dir, auth_db, auth_user, auth_pass
         except Exception, e:
             print 'There was an error parsing the config file. {}'.format(e)
     else:
@@ -102,10 +110,10 @@ def parse_config():
                 log_dir = cparser.get('Logging', 'log_file')
             else:
                 log_dir = ''
-            if 'Auth' in parser.sections():
-                auth_db = parser.get('Auth', 'log_file')
-                auth_user = parser.get('Auth', 'auth_user')
-                auth_pass = parser.get('Auth', 'auth_pass')
+            if 'Auth' in cparser.sections():
+                auth_db = cparser.get('Auth', 'auth_db')
+                auth_user = cparser.get('Auth', 'auth_user')
+                auth_pass = cparser.get('Auth', 'auth_pass')
             else:
                 auth_db = ''
                 auth_user = ''
