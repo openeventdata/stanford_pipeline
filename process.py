@@ -13,6 +13,19 @@ def make_conn(db_auth, db_user, db_pass):
     """
     Function to establish a connection to a local MonoDB instance.
 
+    Parameters
+    ----------
+
+    db_auth: String.
+                MongoDB database that should be used for user authentication.
+
+    db_user: String.
+                Username for MongoDB authentication.
+
+    db_user: String.
+                Password for MongoDB authentication.
+
+
     Returns
     -------
 
@@ -31,8 +44,8 @@ def make_conn(db_auth, db_user, db_pass):
 def query_today(collection, date):
     """
     Function to query the MongoDB instance and obtain results for the desired
-    date range. The query constructed is: greater_than_date > results
-    < less_than_date.
+    date range. Pulls stories that aren't Stanford parsed yet
+    (``"stanford: 0"``) and that were added within the last day.
 
     Parameters
     ----------
@@ -40,31 +53,14 @@ def query_today(collection, date):
     collection: pymongo.collection.Collection.
                 Collection within MongoDB that holds the scraped news stories.
 
-    less_than_date: Datetime object.
-                    Date for which results should be older than. For example,
-                    if the date running is the 25th, and the desired date is
-                    the 24th, then the `less_than_date` is the 25th.
-
-    greater_than_date: Datetime object.
-                        Date for which results should be older than. For
-                        example, if the date running is the 25th, and the
-                        desired date is the 24th, then the `greater_than_date`
-                        is the 23rd.
-
-    write_file: Boolean.
-                Option indicating whether to write the results from the web
-                scraper to an intermediate file. Defaults to false.
+    date: String.
+            Current date that the program is running.
 
     Returns
     -------
 
-    posts: List.
-            List of dictionaries of results from the MongoDB query.
-
-
-    final_out: String.
-                If `write_file` is True, this contains a string representation
-                of the query results. Otherwise, contains an empty string.
+    posts: pymongo.cursor.Cursor.
+            Results from the MongoDB query.
 
     """
 

@@ -6,6 +6,23 @@ import logging
 
 
 def stanford_parse(coll, stories, stanford):
+    """
+    Runs stories pulled from the MongoDB instance through CoreNLP. Updates
+    the database entry with the parsed sentences. Currently set to run the
+    first 6 sentences.
+
+    Parameters
+    ----------
+
+    coll: pymongo.collection.Collection.
+            Collection within MongoDB that holds the scraped news stories.
+
+    stories: pymongo.cursor.Cursor.
+                Stories pulled from the MongoDB instance.
+
+    stanford: String.
+                Directory path for Stanford CoreNLP.
+    """
     logger = logging.getLogger('stanford')
 
     logger.info('Setting up CoreNLP.')
