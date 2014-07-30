@@ -1,7 +1,7 @@
 # -*- encoding=utf-8 -*-
 
 import re
-import corenlp
+import sockwrap
 import logging
 
 
@@ -27,9 +27,10 @@ def stanford_parse(coll, stories, stanford):
 
     logger.info('Setting up CoreNLP.')
     print "\nSetting up StanfordNLP. The program isn't dead. Promise."
-    core = corenlp.StanfordCoreNLP(stanford,
-                                   properties='new.properties',
-                                   memory='2g')
+    stanford_parser = sockwrap.SockWrap(mode='justparse',
+                                        configfile='stanford_config.ini',
+                                        corenlp_libdir=stanford)
+
     total = stories.count()
     print "Stanford setup complete. Starting parse of {} stories...".format(total)
     logger.info('Finished CoreNLP setup.')
@@ -48,8 +49,8 @@ def stanford_parse(coll, stories, stanford):
             parsed = []
             for sent in content:
                 try:
-                    stanford_result = core.raw_parse(sent)
-                    parsed.append(stanford_result['sentences'][0]['parsetree'])
+                    stanford_result = stanford_parser.parse_doc(sent)
+                    parsed.append(stanford_result['sentences'][0]['parse'])
 
                 except Exception as e:
                     print 'Error on story {}. ¯\_(ツ)_/¯. {}'.format(story['_id'],
