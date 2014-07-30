@@ -1,5 +1,6 @@
 Unidecode==0.04.16
 pexpect==3.2
 pymongo==2.7.1
+stanford-corepywrapper==0.0.1a
 wsgiref==0.1.2
 xmltodict==0.9.0
