@@ -1,8 +1,8 @@
 # -*- encoding=utf-8 -*-
 
 import re
-import sockwrap
 import logging
+from stanford_corepywrapper import sockwrap
 
 
 def stanford_parse(coll, stories, stanford):
