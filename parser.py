@@ -2,7 +2,7 @@
 
 import re
 import logging
-from stanford_corepywrapper import sockwrap
+from stanford_corenlp_pywrapper import sockwrap
 
 
 def stanford_parse(coll, stories, stanford):
