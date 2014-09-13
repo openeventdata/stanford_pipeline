@@ -2,6 +2,7 @@
 
 import re
 import logging
+import datetime
 from stanford_corenlp_pywrapper import sockwrap
 
 
@@ -36,7 +37,8 @@ def stanford_parse(coll, stories, stanford):
     logger.info('Finished CoreNLP setup.')
 
     for story in stories:
-        print 'Processing story {}'.format(story['_id'])
+        print 'Processing story {}. {}'.format(story['_id'],
+                                               datetime.datetime.now())
         logger.info('\tProcessing story {}'.format(story['_id']))
 
         if story['stanford'] == 1:
