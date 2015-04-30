@@ -1,6 +1,10 @@
-Unidecode==0.04.16
+APScheduler==3.0.3
+futures==2.2.0
 pexpect==3.2
 pymongo==2.7.1
-git+https://github.com/johnb30/stanford_corenlp_pywrapper.git
-wsgiref==0.1.2
+pytz==2015.2
+six==1.9.0
+-e git+https://github.com/johnb30/stanford_corenlp_pywrapper.git@f7196a585087f4b9f05b63cdb77f790af9750261#egg=stanford_corenlp_pywrapper-master
+tzlocal==1.1.3
+Unidecode==0.4.16
 xmltodict==0.9.0
