@@ -129,7 +129,7 @@ def run():
     logger.info('Running.')
 
     now = datetime.datetime.utcnow()
-    coll = make_conn(db_auth, db_user, db_pass)
+    coll = make_conn(db_auth, db_user, db_pass, db_host)
     stories = query_today(coll, now)
     parser.stanford_parse(coll, stories, stanford_dir)
 
