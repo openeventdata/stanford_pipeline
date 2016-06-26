@@ -14,7 +14,28 @@ current install comes from my (John Beieler)
 [fork](https://github.com/johnb30/stanford-corepywrapper). The config file for
 CoreNLP makes use of the shift-reduce parser introduced in CoreNLP 3.4.
 
+CoreNLP Setup
+--------
+
+This pipeline depends on having CoreNLP 3.4 with the shift-reduce parser.
+Download the models like this:
+
+```
+wget http://nlp.stanford.edu/software/stanford-corenlp-full-2014-06-16.zip
+unzip stanford-corenlp-full-2014-06-16.zip
+mv stanford-corenlp-full-2014-06-16 stanford-corenlp
+cd stanford-corenlp
+wget http://nlp.stanford.edu/software/stanford-srparser-2014-07-01-models.jar
+```
+
+If errors persist, try changing the path in `default_config.ini` from the
+relative path `~/stanford-corenlp` to the full path (e.g.)
+`~/home/ahalterman/stanford-corenlp`.
+
 Usage
 -----
 
 `python process.py`
+
+Up to a minute of `[Errno 111] Connection refused` messages are normal during
+startup.
