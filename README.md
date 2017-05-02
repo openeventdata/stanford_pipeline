@@ -30,7 +30,15 @@ wget http://nlp.stanford.edu/software/stanford-srparser-2014-07-01-models.jar
 
 If errors persist, try changing the path in `default_config.ini` from the
 relative path `~/stanford-corenlp` to the full path (e.g.)
-`~/home/ahalterman/stanford-corenlp`.
+`/home/ahalterman/stanford-corenlp`.
+
+Configuration
+-----------
+
+The `default_config.ini` file has several options that can be changed,
+including the MongoDB database and collection of stories to process and whether
+all unparsed stories should be processed or just the stories added in the last
+day.
 
 Usage
 -----
