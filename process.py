@@ -172,15 +172,25 @@ def run():
     now = datetime.datetime.utcnow()
     coll = make_conn(db_db, db_collection, db_auth, db_user, db_pass, db_host)
     if db_range == "today":
-        logger.info("Parsing today's unparsed stories")
+        logger.info("Getting today's unparsed stories from db '{0}', collection '{1}'".format(db_db, db_collection))
         stories = query_today(coll, now)
     elif db_range == "all":
-        logger.info("Parsing all unparsed stories in db")
+        logger.info("Getting all unparsed stories in db '{0}', collection '{1}'".format(db_db, db_collection))
         stories = query_all(coll)
     else:
         logger.error("Invalid range specification. Must be one of 'today', 'all'")
         return
-    parser.stanford_parse(coll, stories, stanford_dir)
+    if stories.count() > 30000:
+        print("About to process a bunch ({0}) of stories.".format(stories.count()))
+        goahead = raw_input("Proceed anyway? [y/n]: ")
+        print(goahead)
+    else:
+        goahead = "y"
+
+    if goahead == "y":
+        parser.stanford_parse(coll, stories, stanford_dir)
+    else:
+        print("Did not get 'y'[es] to continue processing. Quitting")
 
 
 if __name__ == '__main__':
