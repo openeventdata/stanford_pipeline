@@ -37,12 +37,12 @@ def stanford_parse(coll, stories, stanford):
     logger.info('Finished CoreNLP setup.')
 
     for story in stories:
-        print 'Processing story {}. {}'.format(story['_id'],
-                                               datetime.datetime.now())
+        #print 'Processing story {}. {}'.format(story['_id'],
+        #                                       datetime.datetime.now())
         logger.info('\tProcessing story {}'.format(story['_id']))
 
         if story['stanford'] == 1:
-            print '\tStory {} already parsed.'.format(story['_id'])
+            #print '\tStory {} already parsed.'.format(story['_id'])
             logger.info('\tStory {} already parsed.'.format(story['_id']))
             pass
         else:
